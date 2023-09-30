@@ -25,6 +25,9 @@ const GlobalContext = createContext<ContextProps>({
 export const GlobalContextProvider = ({ children }: any) => {
   const [newName, setNewName] = useState<string>("");
   const [newEmail, setNewEmail] = useState<string>("");
+
+
+
   return (
     <GlobalContext.Provider
       value={{ newName, setNewName, newEmail, setNewEmail }}
