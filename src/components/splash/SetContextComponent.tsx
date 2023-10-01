@@ -7,9 +7,6 @@ import { useGlobalContext } from "../not_sure";
 
 export default function SetContextComponent() {
   const { newName, setNewName, newEmail, setNewEmail } = useGlobalContext();
-
-  console.log(newName);
-  console.log(newEmail);
   
   return (
     <div className="flex flex-col gap-3 items-center">

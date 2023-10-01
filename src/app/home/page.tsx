@@ -1,17 +1,12 @@
-"use client"
-
-import Image from "next/image";
+import DisplayUser from "@/components/home/DisplayUser";
 import Link from "next/link";
-import { useGlobalContext } from "../../components/not_sure";
 
 export default function Home() {
     
-    const { newName, setNewName, newEmail, setNewEmail } = useGlobalContext();
-
-    console.log(newName);
 
     return (
         <main className="flex flex-col items-center gap-3">
+            <DisplayUser/>
             <p className="text-white text-lg px-5 text-center">
             Teste seus conhecimentos sobre Ciência da Computação!
             </p>
