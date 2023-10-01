@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useGlobalContext } from "@/context/main";
 
 export default function PageQuiz() {
+  const [showCorrect, setShowCorrect] = useState(false);
   const [activeQuestion, setActiveQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(false);
   const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null);
@@ -38,7 +39,6 @@ export default function PageQuiz() {
   }
 
   function nextQuestionHandler() {
-    setSelectedAnswerIndex(null);
     setResult((prev) =>
       selectedAnswer
         ? {
@@ -51,6 +51,14 @@ export default function PageQuiz() {
             wrongAnswers: prev.wrongAnswers + 1,
           }
     );
+    setShowCorrect(true);
+    nexQuestionTimer(2);
+  }
+
+  async function nexQuestionTimer (seconds: number){
+
+    await new Promise(resolve => setTimeout(resolve, seconds * 1000));
+
     if (activeQuestion !== questions.length - 1) {
       setActiveQuestion((prev) => prev + 1);
     } else {
@@ -58,6 +66,8 @@ export default function PageQuiz() {
       setShowResult(true);
     }
     setChecked(false);
+    setShowCorrect(false);
+    setSelectedAnswerIndex(null);
   }
 
   return (
@@ -84,7 +94,34 @@ export default function PageQuiz() {
                 text-blue-700 font-semibold hover:text-white 
                 py-2 px-4 border border-blue-500 
                 hover:border-transparent rounded
-                ${selectedAnswerIndex === idx ? "bg-blue-700 text-white" : ""}
+
+                ${showCorrect ? (
+                  selectedAnswerIndex === idx
+                  ? (
+                    correctAnswer === answer ? 
+                    (
+                      "bg-green-700 text-white"
+                    ):(
+                      "bg-red-700 text-white"
+                    )
+                  ):(
+                    correctAnswer === answer ?
+                    (
+                      "bg-green-700 text-white"
+                    ):
+                    (
+                      ""
+                    )
+                  )
+                ):(
+                  selectedAnswerIndex === idx 
+                    ? (
+                      "bg-blue-700 text-white"
+                    )
+                  : (
+                    ""
+                  )
+                )}
               `}
                   onClick={() => onAnswerSelected(answer, idx)}
                 >
