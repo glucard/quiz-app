@@ -17,6 +17,7 @@ export default function PageQuiz() {
   const [subject, setSubject] = useState([]);
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [ranking, setRanking] = useState([]);
+  const [tabSwitchCount, setTabSwitchCount] = useState(0);
 
   const [showCorrect, setShowCorrect] = useState(false);
   const [activeQuestion, setActiveQuestion] = useState(0);
@@ -28,6 +29,21 @@ export default function PageQuiz() {
     score: 0,
     correctAnswers: 0,
     wrongAnswers: 0,
+  });
+
+  window.onblur = function () {
+    setTabSwitchCount(tabSwitchCount + 1);
+    console.log(tabSwitchCount);
+  };
+
+  document.addEventListener("visibilitychange", (event) => {
+    if (document.visibilityState == "visible") {
+      console.log("tab is active")
+    } else {
+      console.log("tab is inactive")
+      setTabSwitchCount(tabSwitchCount + 1)
+      console.log(tabSwitchCount)
+    }
   });
 
   useEffect(()=> {
@@ -168,6 +184,7 @@ export default function PageQuiz() {
 
   return (
     questions[activeQuestion] ? (
+      tabSwitchCount < 2 ? (
       <div className="flex flex-col justify-center items-center">
         <div className="pb-2">
           <p>Olá <span className="font-bold">{newName}</span> , seja bem vindo! </p>
@@ -288,6 +305,13 @@ export default function PageQuiz() {
           )}
         </div>
       </div>
+      ):(
+        <Link href="/">
+          <button className="bg-blue-950 p-2 rounded-lg hover:bg-white hover:text-black">
+            Max tab count reached, click here to return
+          </button>
+        </Link>
+      )
     ):(
       quiz.id ? (
         <div className="flex flex-row justify-center">
