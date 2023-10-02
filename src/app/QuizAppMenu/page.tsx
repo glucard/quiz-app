@@ -36,7 +36,7 @@ export default function QuizAppMenu() {
                 quizes.map((quiz, quiz_idx) => (
                     <div key={quiz_idx} className="flex flex-row gap-5 p-3 bg-blue-900 items-center rounded-xl">
                         {quiz.subject}
-                        <Link href={"/quiz/edit?quiz_id="+quiz.id}>
+                        <Link href={"/quiz?quiz_id="+quiz.id}>
                             <button className="bg-blue-950 p-2 rounded-lg hover:bg-white hover:text-black">
                                 Take quiz
                             </button>

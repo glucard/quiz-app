@@ -3,6 +3,7 @@
 import { useState, useEffect, FormEventHandler } from "react";
 
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 export default function EditQuiz() {
     const searchParams = useSearchParams()
@@ -118,6 +119,12 @@ export default function EditQuiz() {
             { quiz.id ? (
                 <div className="flex flex-col w-96 gap-10">
                     Editing Quiz {quiz.subject}
+                    
+                    <Link href={"/quiz?quiz_id="+quiz.id}>
+                        <button className="bg-blue-950 p-2 rounded-lg hover:bg-white hover:text-black">
+                            Take quiz
+                        </button>
+                    </Link>
                     <div className="flex flex-col gap-5">
                         <div className="flex flex-col gap-5">
                             { 
