@@ -39,15 +39,15 @@ export default function CreateQuiz () {
     }
     
     return (
-        <div>
+        <div className="flex flex-col bg-blue-900 items-center justify-center gap-3 p-3">
             Creating new Quiz
 
-            <form>
+            <div>
                 Subject: <input className="text-black" name="quiz_subject" value={subject} onChange={e => setSubject(e.target.value)}/>
-                <button onClick={handleCreate}>
-                    Create
-                </button>
-            </form>
+            </div>
+            <button className="bg-blue-950 p-2 rounded-lg hover:bg-white hover:text-black" onClick={handleCreate}>
+                Create
+            </button>
         </div>
     );
 }

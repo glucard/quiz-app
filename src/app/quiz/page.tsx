@@ -16,6 +16,7 @@ export default function PageQuiz() {
   const [questions, setQuestions] = useState([]);
   const [subject, setSubject] = useState([]);
   const [totalQuestions, setTotalQuestions] = useState(0);
+  const [ranking, setRanking] = useState([]);
 
   const [showCorrect, setShowCorrect] = useState(false);
   const [activeQuestion, setActiveQuestion] = useState(0);
@@ -80,6 +81,10 @@ export default function PageQuiz() {
 
   const router = useRouter();
 
+  if (!newName || !newEmail){
+    router.push("/");
+  }
+
   function onAnswerSelected(answer: any, idx: any) {
     setChecked(true);
     setSelectedAnswerIndex(idx);
@@ -106,7 +111,7 @@ export default function PageQuiz() {
           }
     );
     setShowCorrect(true);
-    nexQuestionTimer(2);
+    nexQuestionTimer(1);
   }
 
   async function nexQuestionTimer (seconds: number){
@@ -118,10 +123,47 @@ export default function PageQuiz() {
     } else {
       setActiveQuestion(0);
       setShowResult(true);
+      handleUserRankCreate();
     }
     setChecked(false);
     setShowCorrect(false);
     setSelectedAnswerIndex(null);
+  }
+
+  async function handleUserRankCreate() {
+    console.log(newName, newEmail, result.score, quiz.id)
+    if (newName && newEmail && quiz.id){
+      const score = (result.correctAnswers*5).toString();
+      console.log("1111111111111111111111111111", score);
+      try {
+        (async ()=> {
+          const body = {
+            name: newName,
+            email: newEmail,
+            score: score,
+            quiz_id: quiz.id,
+          };
+          console.log("RESLTSCORE   ", result.score);
+          const res = await fetch(`/api/user_rank/create`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(body),
+          });
+          const userrank_res = await res.json();
+          console.log("ISJADFIAJSDIASJI");
+          console.log(userrank_res);
+          setRanking(userrank_res);
+
+
+        })();
+      } catch (error) {
+      console.error(error);
+    }
+    } else {
+      console
+      setError("All fields are required");
+      return;
+    }
   }
 
   return (
@@ -136,7 +178,7 @@ export default function PageQuiz() {
             Questão: {activeQuestion + 1}/{totalQuestions}
           </h2>
         </div>
-        <div className="max-w-sm rounded overflow-hidden shadow-lg bg-gray-100">
+        <div className="max-[900px] rounded overflow-hidden shadow-lg bg-gray-100">
           {!showResult ? (
             <div className="px-6 py-4">
               <div className="font-bold text-xl mb-2 text-black">{question}</div>
@@ -218,6 +260,18 @@ export default function PageQuiz() {
               <h3>
                 Respostas Erradas: <span> {result.wrongAnswers}</span>
               </h3>
+              <div className="flex flex-col bg-blue-900 text-white gap-3 p-5 rounded-lg">
+                Ranking
+                {
+                  ranking.map((user_rank, user_rank_id) => (
+                    <div key={user_rank_id} className="flex flex-row gap-3 p-1">
+                      <p>{user_rank.name}</p>
+                      <p>{user_rank.email}</p>
+                      <p>{user_rank.score}</p>
+                    </div>
+                  ))
+                }
+              </div>
               <div className="px-6 pt-4 pb-2 flex justify-center">
                 <button
                   className={`
