@@ -31,11 +31,6 @@ export default function PageQuiz() {
     wrongAnswers: 0,
   });
 
-  window.onblur = function () {
-    setTabSwitchCount(tabSwitchCount + 1);
-    console.log(tabSwitchCount);
-  };
-
   document.addEventListener("visibilitychange", (event) => {
     if (document.visibilityState == "visible") {
       console.log("tab is active")
