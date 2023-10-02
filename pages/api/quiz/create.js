@@ -8,5 +8,7 @@ export default async function createQuiz(req, res) {
             subject: subject,
         },
     });
+    console.log(result);
     res.json(result);
+
 }

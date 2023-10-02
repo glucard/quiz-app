@@ -18,7 +18,7 @@ export default function Home() {
     e.preventDefault();
     console.log(newName, newEmail);
     // Ir para pagina do quiz
-    router.push("/quiz");
+    router.push("/QuizAppMenu");
   };
 
   return (
@@ -63,11 +63,6 @@ export default function Home() {
           </div>
         </form>
       </div>
-      <Link href="/quiz/create">
-        <button>
-          Create Quiz
-        </button>
-      </Link>
       {/* <Link href="/quiz">
         <button className="bg-orange-400 hover:bg-orange-600 font-bold py-2 px-4 rounded-full">
           Start Quiz

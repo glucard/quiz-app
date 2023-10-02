@@ -1,11 +1,15 @@
 "use client";
 
 import { quiz } from "@/data/quiz";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useGlobalContext } from "@/context/main";
 
 export default function PageQuiz() {
+
+  
+  const searchParams = useSearchParams()
+
   const [showCorrect, setShowCorrect] = useState(false);
   const [activeQuestion, setActiveQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(false);
@@ -17,6 +21,7 @@ export default function PageQuiz() {
     correctAnswers: 0,
     wrongAnswers: 0,
   });
+
 
   // Desestruturação
   const { questions, subject, totalQuestions } = quiz;
